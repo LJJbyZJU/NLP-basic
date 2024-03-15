@@ -5,14 +5,13 @@ import json
 from math import log
 from string import punctuation as punc
 from collections import Counter
-from wordcloud import WordCloud
-import matplotlib.pyplot as plt
 
 # TF
 tf_results = {}
 
 # 设置文件夹路径
-root_folder_path = './example'
+# root_folder_path = './example'
+root_folder_path = './20news-18828'
 
 punc += "\n"
 # 初始化文档频率字典
@@ -63,7 +62,6 @@ def pretreatment(root_path):
 
 # 调用函数处理所有文件
 pretreatment(root_folder_path)
-# print(tf_results)
 
 # # 打印层次化的结果
 # for folder, folder_results in tf_results.items():
@@ -130,21 +128,5 @@ for folder, folder_results in tf_results.items():
     with open(f'{folder_path}/{folder_name}_tf_idf.json', 'w', encoding='utf-8') as tf_idf_file:
         json.dump(folder_data['tf-idf'], tf_idf_file, ensure_ascii=False, indent=4)
 
-json_filename = './results/test1/test1_tf_idf.json'
 
-with open(json_filename, 'r', encoding='utf-8') as f:
-    tf_idf_data = json.load(f)
-
-first_article_filename = next(iter(tf_idf_data))
-article_tf_idf = tf_idf_data[first_article_filename]['tf-idf']
-
-# 生成词云图
-wordcloud = WordCloud(width=800, height=400, background_color='white')
-wordcloud.generate_from_frequencies(article_tf_idf)
-
-# 显示词云图
-plt.figure(figsize=(10, 5))
-plt.imshow(wordcloud, interpolation='bilinear')
-plt.axis('off')
-plt.show()
 
