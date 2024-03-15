@@ -6,7 +6,12 @@ from string import punctuation as punc
 from collections import Counter
 from wordcloud import WordCloud
 
-with open("./example/51120", "r") as f:
+# with open("./example/51120", "r") as f:
+#     essey1 = f.read()
+# with open("./example/51121", "r") as f:
+#     essey2 = f.read()
+
+with open("./20news-18828/alt.atheism/51060", "r") as f:
     essey1 = f.read()
 with open("./example/51121", "r") as f:
     essey2 = f.read()

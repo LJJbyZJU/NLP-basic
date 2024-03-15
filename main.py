@@ -140,9 +140,9 @@ import os
 from string import punctuation as punc
 import re
 
-with open("./example/51120", "r") as f:
+with open("./example/test1/51120", "r") as f:
     essey1 = f.read()
-with open("./example/51121", "r") as f:
+with open("./example/test2/51121", "r") as f:
     essey2 = f.read()
 
 punc += "\n"
@@ -150,7 +150,7 @@ punc += "\n"
 essey1 = re.sub(r"[{}]+".format(punc), " ", essey1).lower()
 essey2 = re.sub(r"[{}]+".format(punc), " ", essey2).lower()
 
-print(type(essey1))
+print(essey1)
 
 
 def get_dic_and_bow(essey:str):
