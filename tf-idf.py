@@ -5,6 +5,7 @@ import json
 from math import log
 from string import punctuation as punc
 from collections import Counter
+from tqdm import tqdm
 
 # TF
 tf_results = {}
@@ -28,10 +29,10 @@ stopwords.extend("\n")
 def pretreatment(root_path):
     global doc_frequency
     # 遍历文件
-    for folder_name, subfolders, files in os.walk(root_path):
-        # 初始化当前文件夹的结果字典
+    # 使用tqdm包装os.walk以显示进度条
+    for folder_name, subfolders, files in tqdm(os.walk(root_path), desc="Processing folders"):
         folder_results = {}
-        for file in files:
+        for file in tqdm(files, desc=f"Processing files in {folder_name}"):
             # 构造文件的绝对路径
             file_path = os.path.join(folder_name, file)
 
@@ -77,7 +78,7 @@ idf_results = {word: log(num_docs / df) for word, df in doc_frequency.items()}
 tf_idf_results = {}
 
 # 计算TF-IDF并写入不同的字典中
-for folder, folder_results in tf_results.items():
+for folder, folder_results in tqdm(tf_results.items(), desc="Calculating TF-IDF"):
     tf_idf_folder_results = {}
     for file, values in folder_results.items():
         tf = values['tf']
@@ -102,7 +103,7 @@ for folder, folder_results in tf_results.items():
 #     json.dump(json_data, json_file, ensure_ascii=False, indent=4)
 
 # 遍历子文件夹
-for folder, folder_results in tf_results.items():
+for folder, folder_results in tqdm(tf_results.items(), desc="Writing TF-IDF.json"):
     if folder == root_folder_path:
         continue  # 如果是根目录，则跳过
     # 创建包含TF、IDF和TF-IDF值的字典
